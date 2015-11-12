@@ -69,6 +69,19 @@ void SoundPlayer_SetTrack(SoundPlayer *sp, uint16_t track) {
 
 void SoundPlayer_Play(SoundPlayer *sp) {
 	SoundPlayer_SendCommand(sp, SP_PLAY);
+	
+	//Initialize the blocking timeout of 50ms
+	Util_BlockWhile(0, 50);
+	
+	//PIN is two bytes before the associated PORT
+	//Block until the busy pin goes high, or 50ms has passed
+	while(Util_BlockWhile( !CHECK_BIT(*(sp->port - 2), sp->busyPin), 0 ));
+	
+	//Block until the busy signal goes low
+	while(CHECK_BIT(*(sp->port - 2), sp->busyPin));
+	
+	//Wait 10ms. Otherwise the module can get confused with repeated play requests.
+	Util_WaitMillis(10);
 }
 
 void SoundPlayer_Stop(SoundPlayer *sp) {
