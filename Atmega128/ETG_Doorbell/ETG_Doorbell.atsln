@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ETG_Doorbell", "ETG_Doorbell.cproj", "{C75352F0-B460-4849-9777-038425971F6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C75352F0-B460-4849-9777-038425971F6D}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C75352F0-B460-4849-9777-038425971F6D}.Debug|AVR.Build.0 = Debug|AVR
+		{C75352F0-B460-4849-9777-038425971F6D}.Release|AVR.ActiveCfg = Release|AVR
+		{C75352F0-B460-4849-9777-038425971F6D}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
