@@ -3,27 +3,27 @@ ETG_Doorbell.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000000de  00000152  2**0
+  0 .data         00000000  00800100  00000104  00000178  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000de  00000000  00000000  00000074  2**1
+  1 .text         00000104  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000152  2**0
+  2 .comment      00000030  00000000  00000000  00000178  2**0
                   CONTENTS, READONLY
-  3 .debug_aranges 00000048  00000000  00000000  00000182  2**0
+  3 .debug_aranges 00000048  00000000  00000000  000001a8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   0000014f  00000000  00000000  000001ca  2**0
+  4 .debug_info   0000016f  00000000  00000000  000001f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 000000ed  00000000  00000000  00000319  2**0
+  5 .debug_abbrev 0000010d  00000000  00000000  0000035f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   000001ca  00000000  00000000  00000406  2**0
+  6 .debug_line   000001f8  00000000  00000000  0000046c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  00000058  00000000  00000000  000005d0  2**2
+  7 .debug_frame  00000058  00000000  00000000  00000664  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    00000162  00000000  00000000  00000628  2**0
+  8 .debug_str    00000165  00000000  00000000  000006bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    0000002a  00000000  00000000  0000078a  2**0
+  9 .debug_loc    0000006c  00000000  00000000  00000821  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000028  00000000  00000000  000007b4  2**0
+ 10 .debug_ranges 00000028  00000000  00000000  0000088d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -108,85 +108,132 @@ Disassembly of section .text:
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
   98:	02 d0       	rcall	.+4      	; 0x9e <main>
-  9a:	1f c0       	rjmp	.+62     	; 0xda <_exit>
+  9a:	32 c0       	rjmp	.+100    	; 0x100 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
 
 0000009e <main>:
+#define DEBUGDDR	DDRG
 
 int main(void)
 {
-	//nav_initPorts();
-	uint8_t buttons = 0;
-	DDRC &= ~(PB_DOWN | PB_LEFT |PB_RIGHT| PB_UP | PB_SEL); 
-  9e:	84 b3       	in	r24, 0x14	; 20
-  a0:	87 70       	andi	r24, 0x07	; 7
-  a2:	84 bb       	out	0x14, r24	; 20
+	uint8_t navButtons = 0;
+	nav_initPorts();
+  9e:	29 d0       	rcall	.+82     	; 0xf2 <nav_initPorts>
 	
 	//debug leds
-	DDRG |= DEBUG1 | DEBUG2;
-  a4:	e4 e6       	ldi	r30, 0x64	; 100
-  a6:	f0 e0       	ldi	r31, 0x00	; 0
-  a8:	80 81       	ld	r24, Z
-  aa:	83 60       	ori	r24, 0x03	; 3
-  ac:	80 83       	st	Z, r24
-	PORTG &= ~(DEBUG1| DEBUG2);
-  ae:	e5 e6       	ldi	r30, 0x65	; 101
-  b0:	f0 e0       	ldi	r31, 0x00	; 0
-  b2:	80 81       	ld	r24, Z
-  b4:	8c 7f       	andi	r24, 0xFC	; 252
-  b6:	80 83       	st	Z, r24
-	//DEBUGPORT &= _bv(DEBUG1) | _bv(DEBUG2);
-	buttons = (PORTG & 0x80);
-  b8:	80 81       	ld	r24, Z
-		if(buttons & PB_SEL)
-		{
-			DEBUGPORT |= DEBUG1;	
-		}else
-		{
-			DEBUGPORT &= ~DEBUG1;
-  ba:	c5 e6       	ldi	r28, 0x65	; 101
-  bc:	d0 e0       	ldi	r29, 0x00	; 0
-	buttons = (PORTG & 0x80);
-	
+	DEBUGDDR |= DEBUG1 | DEBUG2;
+  a0:	e4 e6       	ldi	r30, 0x64	; 100
+  a2:	f0 e0       	ldi	r31, 0x00	; 0
+  a4:	80 81       	ld	r24, Z
+  a6:	83 60       	ori	r24, 0x03	; 3
+  a8:	80 83       	st	Z, r24
+	DEBUGPORT |= (DEBUG1| DEBUG2);
+  aa:	e5 e6       	ldi	r30, 0x65	; 101
+  ac:	f0 e0       	ldi	r31, 0x00	; 0
+  ae:	80 81       	ld	r24, Z
+  b0:	83 60       	ori	r24, 0x03	; 3
+  b2:	80 83       	st	Z, r24
+	 int i = 0;
 	 
     while(1)
     {
-		buttons = nav_read();
-  be:	0a d0       	rcall	.+20     	; 0xd4 <nav_read>
-		if(buttons & PB_SEL)
-  c0:	84 ff       	sbrs	r24, 4
-  c2:	04 c0       	rjmp	.+8      	; 0xcc <main+0x2e>
-		{
-			DEBUGPORT |= DEBUG1;	
-  c4:	88 81       	ld	r24, Y
-  c6:	81 60       	ori	r24, 0x01	; 1
-  c8:	88 83       	st	Y, r24
-  ca:	f9 cf       	rjmp	.-14     	; 0xbe <main+0x20>
-		}else
-		{
-			DEBUGPORT &= ~DEBUG1;
-  cc:	88 81       	ld	r24, Y
-  ce:	8e 7f       	andi	r24, 0xFE	; 254
-  d0:	88 83       	st	Y, r24
-  d2:	f5 cf       	rjmp	.-22     	; 0xbe <main+0x20>
+		navButtons = nav_read();
+		if(navButtons == 0xF0)DEBUGPORT ^= DEBUG1;
+  b4:	c5 e6       	ldi	r28, 0x65	; 101
+  b6:	d0 e0       	ldi	r29, 0x00	; 0
+  b8:	ff 24       	eor	r15, r15
+  ba:	f3 94       	inc	r15
+#define DEBUG2		_bv(PG1)
+#define DEBUGPORT	PORTG
+#define DEBUGDDR	DDRG
 
-000000d4 <nav_read>:
-	DDRC &= ~(PB_DOWN | PB_LEFT |PB_RIGHT| PB_UP | PB_SEL);  
+int main(void)
+{
+  bc:	00 e1       	ldi	r16, 0x10	; 16
+  be:	17 e2       	ldi	r17, 0x27	; 39
+	
+	 int i = 0;
+	 
+    while(1)
+    {
+		navButtons = nav_read();
+  c0:	1c d0       	rcall	.+56     	; 0xfa <nav_read>
+		if(navButtons == 0xF0)DEBUGPORT ^= DEBUG1;
+  c2:	80 3f       	cpi	r24, 0xF0	; 240
+  c4:	19 f4       	brne	.+6      	; 0xcc <main+0x2e>
+  c6:	98 81       	ld	r25, Y
+  c8:	9f 25       	eor	r25, r15
+  ca:	98 83       	st	Y, r25
+#define DEBUG2		_bv(PG1)
+#define DEBUGPORT	PORTG
+#define DEBUGDDR	DDRG
+
+int main(void)
+{
+  cc:	20 2f       	mov	r18, r16
+  ce:	31 2f       	mov	r19, r17
+  d0:	21 50       	subi	r18, 0x01	; 1
+  d2:	31 09       	sbc	r19, r1
+	 
+    while(1)
+    {
+		navButtons = nav_read();
+		if(navButtons == 0xF0)DEBUGPORT ^= DEBUG1;
+		for(i=0; i < 10000; i ++);
+  d4:	21 15       	cp	r18, r1
+  d6:	31 05       	cpc	r19, r1
+  d8:	d9 f7       	brne	.-10     	; 0xd0 <main+0x32>
+		
+		switch(navButtons)
+  da:	88 30       	cpi	r24, 0x08	; 8
+  dc:	31 f0       	breq	.+12     	; 0xea <main+0x4c>
+  de:	88 3e       	cpi	r24, 0xE8	; 232
+  e0:	79 f7       	brne	.-34     	; 0xc0 <main+0x22>
+		{
+			case (~PB_SEL)& PB_MASK:
+				DEBUGPORT ^= DEBUG1;
+  e2:	88 81       	ld	r24, Y
+  e4:	8f 25       	eor	r24, r15
+  e6:	88 83       	st	Y, r24
+				break;
+  e8:	eb cf       	rjmp	.-42     	; 0xc0 <main+0x22>
+			
+			case PB_LEFT: 
+				DEBUGPORT |= DEBUG2;
+  ea:	88 81       	ld	r24, Y
+  ec:	82 60       	ori	r24, 0x02	; 2
+  ee:	88 83       	st	Y, r24
+				break;
+  f0:	e7 cf       	rjmp	.-50     	; 0xc0 <main+0x22>
+
+000000f2 <nav_initPorts>:
+#include "navButtons.h"
+
+void nav_initPorts(void)
+{
+	//CLEARBIT(NAVDDR, _bv(PB_DOWN) | _bv(PB_UP) | _bv(PB_RIGHT) | _bv(PB_LEFT) | _bv(PB_SEL));
+	NAVDDR &= ~(PB_DOWN | PB_LEFT |PB_RIGHT| PB_UP | PB_SEL);  
+  f2:	84 b3       	in	r24, 0x14	; 20
+  f4:	87 70       	andi	r24, 0x07	; 7
+  f6:	84 bb       	out	0x14, r24	; 20
+  f8:	08 95       	ret
+
+000000fa <nav_read>:
 }
 
 uint8_t nav_read(void)
 {
 	return (PINC & 0xF8);
-  d4:	83 b3       	in	r24, 0x13	; 19
+  fa:	83 b3       	in	r24, 0x13	; 19
 	
 }
-  d6:	88 7f       	andi	r24, 0xF8	; 248
-  d8:	08 95       	ret
+  fc:	88 7f       	andi	r24, 0xF8	; 248
+  fe:	08 95       	ret
 
-000000da <_exit>:
-  da:	f8 94       	cli
+00000100 <_exit>:
+ 100:	f8 94       	cli
 
-000000dc <__stop_program>:
-  dc:	ff cf       	rjmp	.-2      	; 0xdc <__stop_program>
+00000102 <__stop_program>:
+ 102:	ff cf       	rjmp	.-2      	; 0x102 <__stop_program>

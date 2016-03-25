@@ -7,37 +7,59 @@
 
 
 #include <avr/io.h>
+#include <stdint.h>
 #include "util.h"
 #include "navButtons.h"
 
-#define DEBUG1	(1<<PG0)
-#define DEBUG2	(1<<PG1)
-#define DEBUGPORT PORTG
+#define DEBUG1		_bv(PG0)
+#define DEBUG2		_bv(PG1)
+#define DEBUGPORT	PORTG
+#define DEBUGDDR	DDRG
 
 int main(void)
 {
-	//nav_initPorts();
-	uint8_t buttons = 0;
-	DDRC &= ~(PB_DOWN | PB_LEFT |PB_RIGHT| PB_UP | PB_SEL); 
+	navBtn_t navBtn;
+	
+	nav_initPorts();
 	
 	//debug leds
-	DDRG |= DEBUG1 | DEBUG2;
-	PORTG &= ~(DEBUG1| DEBUG2);
-	//DEBUGPORT &= _bv(DEBUG1) | _bv(DEBUG2);
-	buttons = (PORTG & 0x80);
+	DEBUGDDR |= DEBUG1 | DEBUG2;
+	DEBUGPORT |= (DEBUG1| DEBUG2);
 	
+	 int i = 0;
 	 
     while(1)
     {
-		buttons = nav_read();
-		if(buttons & PB_SEL)
-		{
-			DEBUGPORT |= DEBUG1;	
-		}else
-		{
-			DEBUGPORT &= ~DEBUG1;
-		}
 		
+		//if(navButtons == 0xF0)DEBUGPORT ^= DEBUG1;
+		for(i=0; i < 10000; i ++);
+		
+		switch(navBtn)
+		{
+			case (~PB_SEL)& PB_MASK:
+				DEBUGPORT ^= DEBUG1;
+				break;
+			
+			case PB_LEFT: 
+				DEBUGPORT |= DEBUG2;
+				break;
+				
+			case ~PB_RIGHT:
+				DEBUGPORT &= ~(DEBUG2);
+				break;
+				
+			case ~PB_UP:
+				DEBUGPORT |= DEBUG1;
+				break;
+				
+			case ~PB_DOWN:
+				DEBUGPORT &= ~(DEBUG1);
+				break;
+				
+			default:	
+				break;
+				
+		}
 		
 	    //TODO:: Please write your application code 
     }

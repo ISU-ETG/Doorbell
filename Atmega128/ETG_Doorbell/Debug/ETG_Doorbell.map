@@ -10,8 +10,6 @@ Discarded input sections
  .bss           0x00000000        0x0 ETG_Doorbell.o
  .text          0x00000000        0x0 navButtons.o
  .bss           0x00000000        0x0 navButtons.o
- .text.nav_initPorts
-                0x00000000        0x8 navButtons.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -145,7 +143,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0xde
+.text           0x00000000      0x104
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
                 0x00000000                __vector_default
@@ -235,16 +233,19 @@ END GROUP
                 0x0000009c                __vector_20
                 0x0000009e                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x0000009e       0x36 ETG_Doorbell.o
+ .text.main     0x0000009e       0x54 ETG_Doorbell.o
                 0x0000009e                main
+ .text.nav_initPorts
+                0x000000f2        0x8 navButtons.o
+                0x000000f2                nav_initPorts
  .text.nav_read
-                0x000000d4        0x6 navButtons.o
-                0x000000d4                nav_read
-                0x000000da                . = ALIGN (0x2)
+                0x000000fa        0x6 navButtons.o
+                0x000000fa                nav_read
+                0x00000100                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000da        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x000000da                _exit
-                0x000000da                exit
+ .fini9         0x00000100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x00000100                _exit
+                0x00000100                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -263,11 +264,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000da        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000100        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000000de                _etext = .
+                0x00000104                _etext = .
 
-.data           0x00800100        0x0 load address 0x000000de
+.data           0x00800100        0x0 load address 0x00000104
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
@@ -288,8 +289,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800100                PROVIDE (__bss_end, .)
-                0x000000de                __data_load_start = LOADADDR (.data)
-                0x000000de                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000104                __data_load_start = LOADADDR (.data)
+                0x00000104                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800100        0x0
                 0x00800100                PROVIDE (__noinit_start, .)
@@ -366,36 +367,36 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x14f
+.debug_info     0x00000000      0x16f
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000       0xb2 ETG_Doorbell.o
- .debug_info    0x000000b2       0x9d navButtons.o
+ .debug_info    0x00000000       0xd2 ETG_Doorbell.o
+ .debug_info    0x000000d2       0x9d navButtons.o
 
-.debug_abbrev   0x00000000       0xed
+.debug_abbrev   0x00000000      0x10d
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0x82 ETG_Doorbell.o
- .debug_abbrev  0x00000082       0x6b navButtons.o
+ .debug_abbrev  0x00000000       0xa2 ETG_Doorbell.o
+ .debug_abbrev  0x000000a2       0x6b navButtons.o
 
-.debug_line     0x00000000      0x1ca
+.debug_line     0x00000000      0x1f8
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000       0xf8 ETG_Doorbell.o
- .debug_line    0x000000f8       0xd2 navButtons.o
+ .debug_line    0x00000000      0x126 ETG_Doorbell.o
+ .debug_line    0x00000126       0xd2 navButtons.o
 
 .debug_frame    0x00000000       0x58
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 ETG_Doorbell.o
  .debug_frame   0x00000024       0x34 navButtons.o
 
-.debug_str      0x00000000      0x162
+.debug_str      0x00000000      0x165
  *(.debug_str)
- .debug_str     0x00000000      0x142 ETG_Doorbell.o
-                                0x176 (size before relaxing)
- .debug_str     0x00000142       0x20 navButtons.o
+ .debug_str     0x00000000      0x153 ETG_Doorbell.o
+                                0x187 (size before relaxing)
+ .debug_str     0x00000153       0x12 navButtons.o
                                 0x175 (size before relaxing)
 
-.debug_loc      0x00000000       0x2a
+.debug_loc      0x00000000       0x6c
  *(.debug_loc)
- .debug_loc     0x00000000       0x2a ETG_Doorbell.o
+ .debug_loc     0x00000000       0x6c ETG_Doorbell.o
 
 .debug_macinfo
  *(.debug_macinfo)
