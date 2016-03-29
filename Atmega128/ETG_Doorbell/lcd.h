@@ -45,8 +45,8 @@
 #define LCD_CGRAM_WRITE 0x40
 
 #define EN_PIN  	(1<<PA0)
-#define RS_PIN		(1<<PA1)
-#define RW_PIN		(1<<PA2)
+#define RW_PIN		(1<<PA1)
+#define RS_PIN		(1<<PA2)
 #define LCD_PORT_CTL		PORTA
 #define LCD_PORT_DATA		PORTF
 

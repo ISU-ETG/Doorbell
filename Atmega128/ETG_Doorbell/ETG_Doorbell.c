@@ -33,6 +33,8 @@ int main(void)
 	lcd_init();
 	Util_WaitMillis(100);
 	lcd_clear();
+	Util_WaitMillis(10);
+	lcd_putc('a');
 	//DEBUGPORT |= (DEBUG2); //heartbeat
 	//lcd_putc('a');
 	//DEBUGPORT &= ~(DEBUG2);
@@ -66,7 +68,7 @@ int main(void)
 				break;
 			default:
 				DEBUGPORT ^= (DEBUG1); //heartbeat
-				Util_WaitMillis(1000);	//debugging -- turn off
+				//Util_WaitMillis(1000);	//debugging -- turn off
 				break;
 		}
 		
@@ -79,7 +81,7 @@ int main(void)
 				SoundPlayer_SetTrack(&wtvMod, 2);
 				Util_WaitMillis(10);
 				SoundPlayer_Play(&wtvMod);
-				//Util_WaitMillis(15000);
+				Util_WaitMillis(15000);
 			}
 			
 		

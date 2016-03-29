@@ -13,7 +13,7 @@ void lcd_init(void)
 {
 	//Set port to output
 	DDRF  |= 0xFF; //Pins 0 - 7
-	DDRA &= (EN_PIN|RS_PIN| RW_PIN);	//CTL_port
+	DDRA &= ~(EN_PIN|RS_PIN| RW_PIN);	//CTL_port
 
 	LCD_PORT_CTL &= ~(EN_PIN | RW_PIN | RS_PIN);
 
@@ -93,7 +93,7 @@ void lcd_sendCommand(uint8_t data)
 	LCD_PORT_CTL &= ~(RW_PIN | RS_PIN); // Write Command
 
 	//Send High nibble
-	LCD_PORT_DATA |= lcd_revC(data);;
+	LCD_PORT_DATA |= lcd_revC(data);
 	Util_WaitMicros(10);
 	LCD_PORT_CTL &= ~(EN_PIN); //Clock in Data
 	Util_WaitMicros(10);
