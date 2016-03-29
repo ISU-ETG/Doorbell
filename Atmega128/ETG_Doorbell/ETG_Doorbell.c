@@ -9,58 +9,87 @@
 #include <avr/io.h>
 #include <stdint.h>
 #include "util.h"
-#include "navButtons.h"
+#include "joystick.h"
+#include "SoundPlayer.h"
 
-#define DEBUG1		_bv(PG0)
-#define DEBUG2		_bv(PG1)
-#define DEBUGPORT	PORTG
-#define DEBUGDDR	DDRG
+
+
 
 int main(void)
 {
-	navBtn_t navBtn;
+	
+	SoundPlayer wtvMod;
 	
 	nav_initPorts();
+	SoundPlayer_Init(&wtvMod, &PORTD, 4, 3, 5, 2);
+	
+	Joystick_t joystick =NONE;
+	DDRE &= ~((1<<6)|(1<<7)); //Signal Inputs
 	
 	//debug leds
 	DEBUGDDR |= DEBUG1 | DEBUG2;
-	DEBUGPORT |= (DEBUG1| DEBUG2);
+	DEBUGPORT |= ~(DEBUG1| DEBUG2);
 	
 	 int i = 0;
 	 
     while(1)
     {
 		
-		//if(navButtons == 0xF0)DEBUGPORT ^= DEBUG1;
-		for(i=0; i < 10000; i ++);
+		joystick = nav_read();
+		uint8_t isBlocked = 0;
 		
-		switch(navBtn)
+
+		
+		switch(joystick)
 		{
-			case (~PB_SEL)& PB_MASK:
-				DEBUGPORT ^= DEBUG1;
-				break;
-			
-			case PB_LEFT: 
-				DEBUGPORT |= DEBUG2;
-				break;
-				
-			case ~PB_RIGHT:
-				DEBUGPORT &= ~(DEBUG2);
-				break;
-				
-			case ~PB_UP:
+			case LEFT:
 				DEBUGPORT |= DEBUG1;
 				break;
-				
-			case ~PB_DOWN:
-				DEBUGPORT &= ~(DEBUG1);
+			case RIGHT:
+				DEBUGPORT ^= DEBUG1;
 				break;
-				
-			default:	
+			case UP:
+				DEBUGPORT |= DEBUG2;
 				break;
-				
+			case DOWN:
+				DEBUGPORT ^= DEBUG2;
+				break;
+			case SEL:
+				DEBUGPORT |= (DEBUG1|DEBUG2);
+				break;
+			default:
+				//DEBUGPORT ^= (DEBUG1);
+				break;
 		}
 		
+			//static int i = 0;
+			isBlocked = check_Input();
+			
+			
+			if(isBlocked)
+			{
+				SoundPlayer_SetTrack(&wtvMod, 2);
+				Util_WaitMillis(10);
+				SoundPlayer_Play(&wtvMod);
+				Util_WaitMillis(15000);
+			}
+			
+		
+		//DEBUGPORT ^= (DEBUG2);
+		//Util_WaitMicros(128);
+		//DEBUGPORT &= ~(DEBUG2);
+		//TOGGLE_BIT(wtvMod.port, wtvMod.clockPin);
+		//TOGGLE_BIT(wtvMod.port, wtvMod.dataPin);
+		//TOGGLE_BIT(wtvMod.port, wtvMod.resetPin);
+		/*SoundPlayer_SetTrack(&wtvMod, 2);
+		DEBUGPORT &= ~(DEBUG2);
+		Util_WaitMillis(10);
+		
+		SoundPlayer_Play(&wtvMod);
+		Util_WaitMillis(1000);
+	*/
+			
+	}
+		
 	    //TODO:: Please write your application code 
-    }
 }

@@ -37,7 +37,9 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../ETG_Doorbell.c \
-../navButtons.c
+../joystick.c \
+../SoundPlayer.c \
+../util.c
 
 
 PREPROCESSING_SRCS += 
@@ -48,19 +50,27 @@ ASM_SRCS +=
 
 OBJS +=  \
 ETG_Doorbell.o \
-navButtons.o
+joystick.o \
+SoundPlayer.o \
+util.o
 
 OBJS_AS_ARGS +=  \
 ETG_Doorbell.o \
-navButtons.o
+joystick.o \
+SoundPlayer.o \
+util.o
 
 C_DEPS +=  \
 ETG_Doorbell.d \
-navButtons.d
+joystick.d \
+SoundPlayer.d \
+util.d
 
 C_DEPS_AS_ARGS +=  \
 ETG_Doorbell.d \
-navButtons.d
+joystick.d \
+SoundPlayer.d \
+util.d
 
 OUTPUT_FILE_PATH +=ETG_Doorbell.elf
 
@@ -73,6 +83,10 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

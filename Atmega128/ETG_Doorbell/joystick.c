@@ -5,7 +5,7 @@
  *  Author: Noah Bergman
  */ 
 
-#include "navButtons.h"
+#include "joystick.h"
 
 void nav_initPorts(void)
 {
@@ -14,7 +14,7 @@ void nav_initPorts(void)
 	 
 }
 
-Joystick_t nav_read()
+Joystick_t nav_read(void)
 {
 	uint8_t btn = ~NAVPIN;
 	Joystick_t joyStick = NONE;

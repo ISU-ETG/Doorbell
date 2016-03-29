@@ -7,27 +7,30 @@
 
 
 
-#ifndef NAVBUTTONS_H_
-#define NAVBUTTONS_H_
+#ifndef JOYSTICK_H_
+#define JOYSTICK_H_
 
 #include <avr/io.h>
 #include "util.h"
 
 //Navigation Buttons
-#define PB_DOWN		_bv(PC7)
-#define PB_RIGHT	_bv(PC6)
-#define PB_UP		_bv(PC5)
+//NOTE: This configuration is changed from schematic labeling to match orientation.
+#define PB_RIGHT	_bv(PC7)
+#define PB_UP		_bv(PC6)
+#define PB_LEFT		_bv(PC5)
 #define PB_SEL		_bv(PC4)
-#define PB_LEFT		_bv(PC3)
+#define PB_DOWN		_bv(PC3)
 
 #define PB_MASK		(0xF8)		//BUTTON MASK
 
 //BUTTON PRESS IS ACTIVE LOW
+/*
 #define PB_DOWN_PRESS	((~PB_DOWN)& PB_MASK)
 #define PB_RIGHT_PRESS	((~PB_RIGHT)& PB_MASK)
 #define PB_UP_PRESS		((~PB_UP)& PB_MASK)
 #define PB_SEL_PRESS	((~PB_SEL)& PB_MASK)
 #define PB_LEFT_PRESS	((~PB_LEFT)& PB_MASK)
+*/
 
 //NAVIGATION PORT AND DDR
 #define NAVPIN		PINC
@@ -35,11 +38,11 @@
 
 typedef enum {
 	NONE,
-	DOWN,
 	RIGHT,
 	UP,
+	LEFT,
 	SEL,
-	LEFT
+	DOWN
 } Joystick_t;
 
 /*
@@ -62,6 +65,8 @@ typedef union
 //Initialize PC3 - 7 as inputs for navigation
 void nav_initPorts(void);
 
-Joystick_t nav_read();
+
+//Read the joystick buttons and return the button that is pressed.
+Joystick_t nav_read(void);
 
 #endif /* NAVBUTTONS_H_ */

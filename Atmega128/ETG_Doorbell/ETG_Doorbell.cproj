@@ -53,12 +53,12 @@
       <ToolOptions>
         <InterfaceProperties>
           <IspClock>125000</IspClock>
-		   <DebugWireClockDiv>125000</DebugWireClockDiv>
+          <DebugWireClockDiv>125000</DebugWireClockDiv>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200007681</ToolNumber>
+      <ToolNumber>J30200038207</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
   </PropertyGroup>
@@ -124,10 +124,19 @@
     <Compile Include="ETG_Doorbell.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="navButtons.c">
+    <Compile Include="joystick.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="navButtons.h">
+    <Compile Include="joystick.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SoundPlayer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SoundPlayer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util.h">
