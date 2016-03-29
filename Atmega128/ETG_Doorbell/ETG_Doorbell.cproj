@@ -130,6 +130,12 @@
     <Compile Include="joystick.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lcd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lcd.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SoundPlayer.c">
       <SubType>compile</SubType>
     </Compile>

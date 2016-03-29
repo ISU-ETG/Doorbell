@@ -38,6 +38,7 @@ SUBDIRS :=
 C_SRCS +=  \
 ../ETG_Doorbell.c \
 ../joystick.c \
+../lcd.c \
 ../SoundPlayer.c \
 ../util.c
 
@@ -51,24 +52,28 @@ ASM_SRCS +=
 OBJS +=  \
 ETG_Doorbell.o \
 joystick.o \
+lcd.o \
 SoundPlayer.o \
 util.o
 
 OBJS_AS_ARGS +=  \
 ETG_Doorbell.o \
 joystick.o \
+lcd.o \
 SoundPlayer.o \
 util.o
 
 C_DEPS +=  \
 ETG_Doorbell.d \
 joystick.d \
+lcd.d \
 SoundPlayer.d \
 util.d
 
 C_DEPS_AS_ARGS +=  \
 ETG_Doorbell.d \
 joystick.d \
+lcd.d \
 SoundPlayer.d \
 util.d
 
@@ -83,6 +88,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

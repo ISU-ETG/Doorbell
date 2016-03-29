@@ -6,6 +6,8 @@ ETG_Doorbell.c
 
 joystick.c
 
+lcd.c
+
 SoundPlayer.c
 
 util.c

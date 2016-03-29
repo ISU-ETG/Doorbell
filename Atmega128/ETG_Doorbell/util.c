@@ -51,9 +51,9 @@ void Util_WaitMicros(unsigned int micros) {
 	
 	while(TCNT3 < end)
 	{
-		SET_BIT(&DEBUGPORT, 0); //Debug1
+		//SET_BIT(&DEBUGPORT, 0); //Debug1
 	}
-	CLEAR_BIT(&DEBUGPORT, 0);
+	//CLEAR_BIT(&DEBUGPORT, 0);
 	//
 }
 
@@ -75,7 +75,7 @@ uint8_t Util_BlockWhile(uint8_t condition, uint16_t timeout) {
 ISR(TIMER0_COMP_vect) {
 	TCNT0 = 0;
 	ms++;
-	DEBUGPORT ^= DEBUG2;
+	//DEBUGPORT ^= DEBUG2;
 }
 
 //Return true if light is being blocked
